@@ -1,0 +1,2 @@
+module Neighborhood
+end
