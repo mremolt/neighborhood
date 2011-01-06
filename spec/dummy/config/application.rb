@@ -7,6 +7,11 @@ require "action_view/railtie"
 require "action_mailer/railtie"
 
 Bundler.require
+
+# TODO: find out why factories are not loaded by default 
+require "factory_girl"
+Factory.find_definitions
+
 require "neighborhood"
 
 module Dummy
@@ -41,5 +46,12 @@ module Dummy
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    config.generators do |g|
+      g.orm             :active_record
+      g.template_engine :erb
+      g.test_framework  :rspec, :fixture => true
+      g.fixture_replacement :factory_girl, :dir => "spec/factories"
+    end
   end
 end
